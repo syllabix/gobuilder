@@ -1,5 +1,8 @@
 FROM golang:latest
 
+RUN apt-get update && \
+    apt-get -y install unzip
+
 # install protobuf from source
 # install protobuf
 ENV PB_VER="3.10.0"
