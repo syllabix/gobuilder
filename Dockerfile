@@ -30,7 +30,7 @@ RUN git -C "$(go env GOPATH)"/src/github.com/go-swagger/go-swagger/cmd/swagger c
 RUN go install github.com/go-swagger/go-swagger/cmd/swagger
 
 # Install versioner
-ENV VERSIONER_VER="v0.5.2"
+ENV VERSIONER_VER="v0.6.0"
 RUN go get -u github.com/syllabix/versioner/cmd/versioner
 RUN git -C "$(go env GOPATH)"/src/github.com/syllabix/versioner/cmd/versioner checkout $VERSIONER_VER
 RUN go install github.com/syllabix/versioner/cmd/versioner
