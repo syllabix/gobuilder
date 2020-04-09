@@ -43,5 +43,13 @@ RUN go install github.com/vektra/mockery/cmd/mockery
 RUN go get -v github.com/rubenv/sql-migrate/...
 RUN go install github.com/rubenv/sql-migrate
 
+# Install sql boiler
+RUN go get -u -t github.com/volatiletech/sqlboiler
+RUN go install github.com/volatiletech/sqlboiler
+RUN go get github.com/volatiletech/sqlboiler/drivers/sqlboiler-psql
+
+# Install psql
+RUN apk --update add postgresql-client && rm -rf /var/cache/apk/*
+
 # create cache directories
 RUN mkdir -p /.cache/go-build && chmod 777 -R /.cache
