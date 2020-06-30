@@ -36,8 +36,10 @@ RUN git -C "$(go env GOPATH)"/src/github.com/syllabix/versioner/cmd/versioner ch
 RUN go install github.com/syllabix/versioner/cmd/versioner
 
 # Install mockery
-RUN go get -u github.com/vektra/mockery/cmd/mockery
-RUN go install github.com/vektra/mockery/cmd/mockery
+ENV MOCKERY_VER="v2.0.3"
+RUN go get -u github.com/vektra/mockery
+RUN git -C "$(go env GOPATH)"/src/github.com/vektra/mockery checkout $MOCKERY_VER
+RUN go install github.com/vektra/mockery
 
 # Install sql-migrate
 RUN go get -v github.com/rubenv/sql-migrate/...
@@ -49,7 +51,7 @@ RUN go install github.com/volatiletech/sqlboiler
 RUN go get github.com/volatiletech/sqlboiler/drivers/sqlboiler-psql
 
 # Install psql
-RUN apk --update add postgresql-client && rm -rf /var/cache/apk/*
+RUN apt-get install -y postgresql-client
 
 # create cache directories
 RUN mkdir -p /.cache/go-build && chmod 777 -R /.cache
