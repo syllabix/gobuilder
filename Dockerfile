@@ -1,4 +1,4 @@
-FROM golang:latest
+FROM golang:1.16.4
 
 RUN apt-get update && \
     apt-get -y install unzip
@@ -19,36 +19,26 @@ RUN mkdir -p /tmp/protoc && \
 
 # Install the go protoc compiler plugin
 ENV GO_PROTOC_VER="v1.5.2"
-RUN go get -d -u github.com/golang/protobuf/protoc-gen-go
-RUN git -C "$(go env GOPATH)"/src/github.com/golang/protobuf checkout $GO_PROTOC_VER
-RUN go install github.com/golang/protobuf/protoc-gen-go
+RUN go install github.com/golang/protobuf/protoc-gen-go@${GO_PROTOC_VER}
 
 # Install go swagger
 ENV GO_SWAGGER_VER="v0.27.0"
-RUN go get -u github.com/go-swagger/go-swagger/cmd/swagger
-RUN git -C "$(go env GOPATH)"/src/github.com/go-swagger/go-swagger/cmd/swagger checkout $GO_SWAGGER_VER
-RUN go install github.com/go-swagger/go-swagger/cmd/swagger
+RUN go install github.com/go-swagger/go-swagger/cmd/swagger@${GO_SWAGGER_VER}
 
 # Install versioner
 ENV VERSIONER_VER="v0.7.0"
-RUN go get -u github.com/syllabix/versioner/cmd/versioner
-RUN git -C "$(go env GOPATH)"/src/github.com/syllabix/versioner/cmd/versioner checkout $VERSIONER_VER
-RUN go install github.com/syllabix/versioner/cmd/versioner
+RUN go install github.com/syllabix/versioner/cmd/versioner@${VERSIONER_VER}
 
 # Install mockery
 ENV MOCKERY_VER="v2.7.5"
-RUN go get -u github.com/vektra/mockery
-RUN git -C "$(go env GOPATH)"/src/github.com/vektra/mockery checkout $MOCKERY_VER
-RUN go install github.com/vektra/mockery
+RUN go install github.com/vektra/mockery/v2@${MOCKERY_VER}
 
 # Install sql-migrate
-RUN go get -v github.com/rubenv/sql-migrate/...
-RUN go install github.com/rubenv/sql-migrate
+RUN go install github.com/rubenv/sql-migrate/sql-migrate@latest
 
 # Install sql boiler
-RUN go get -u -t github.com/volatiletech/sqlboiler
-RUN go install github.com/volatiletech/sqlboiler
-RUN go get github.com/volatiletech/sqlboiler/drivers/sqlboiler-psql
+RUN go install github.com/volatiletech/sqlboiler/v4@latest
+RUN go install github.com/volatiletech/sqlboiler/v4/drivers/sqlboiler-psql@latest
 
 # Install psql
 RUN apt-get install -y postgresql-client
