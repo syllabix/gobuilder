@@ -5,7 +5,7 @@ RUN apt-get update && \
 
 # install protobuf from source
 # install protobuf
-ENV PB_VER="3.12.3"
+ENV PB_VER="3.17.0"
 ENV PB_URL https://github.com/google/protobuf/releases/download/v${PB_VER}/protoc-${PB_VER}-linux-x86_64.zip
 RUN mkdir -p /tmp/protoc && \
     curl -L ${PB_URL} > /tmp/protoc/protoc.zip && \
@@ -18,13 +18,13 @@ RUN mkdir -p /tmp/protoc && \
     rm -r /tmp/protoc
 
 # Install the go protoc compiler plugin
-ENV GO_PROTOC_VER="v1.4.2"
+ENV GO_PROTOC_VER="v1.5.2"
 RUN go get -d -u github.com/golang/protobuf/protoc-gen-go
 RUN git -C "$(go env GOPATH)"/src/github.com/golang/protobuf checkout $GO_PROTOC_VER
 RUN go install github.com/golang/protobuf/protoc-gen-go
 
 # Install go swagger
-ENV GO_SWAGGER_VER="v0.24.0"
+ENV GO_SWAGGER_VER="v0.27.0"
 RUN go get -u github.com/go-swagger/go-swagger/cmd/swagger
 RUN git -C "$(go env GOPATH)"/src/github.com/go-swagger/go-swagger/cmd/swagger checkout $GO_SWAGGER_VER
 RUN go install github.com/go-swagger/go-swagger/cmd/swagger
@@ -36,7 +36,7 @@ RUN git -C "$(go env GOPATH)"/src/github.com/syllabix/versioner/cmd/versioner ch
 RUN go install github.com/syllabix/versioner/cmd/versioner
 
 # Install mockery
-ENV MOCKERY_VER="v2.0.3"
+ENV MOCKERY_VER="v2.7.5"
 RUN go get -u github.com/vektra/mockery
 RUN git -C "$(go env GOPATH)"/src/github.com/vektra/mockery checkout $MOCKERY_VER
 RUN go install github.com/vektra/mockery
